@@ -14,15 +14,22 @@ const JWT_SECRET = process.env.JWT_SECRET || 'izzon_lab_secret_2024_x9kp2m';
 
 const DATA_FILE   = path.join(__dirname, 'data', 'noticias.json');
 const USER_FILE   = path.join(__dirname, 'data', 'usuario.json');
-const CONFIG_FILE = path.join(__dirname, 'data', 'config.json');
 const UPLOADS_DIR = path.join(__dirname, 'uploads');
 
-const config = JSON.parse(fs.readFileSync(CONFIG_FILE, 'utf8'));
+// Crear carpetas y ficheros si no existen
+if (!fs.existsSync(path.join(__dirname, 'data'))) fs.mkdirSync(path.join(__dirname, 'data'), { recursive: true });
+if (!fs.existsSync(UPLOADS_DIR)) fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+if (!fs.existsSync(DATA_FILE)) fs.writeFileSync(DATA_FILE, '[]');
+if (!fs.existsSync(USER_FILE)) {
+  const hash = require('bcrypt').hashSync(process.env.USER_PASSWORD || 'Zaqwsx1!', 12);
+  fs.writeFileSync(USER_FILE, JSON.stringify({ usuario: process.env.USERNAME_APP || 'martaizzonlab', password: hash }));
+}
+
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: process.env.EMAIL || config.email,
-    pass: process.env.EMAIL_PASSWORD || config.emailPassword
+    user: process.env.EMAIL || 'isaacicg455@gmail.com',
+    pass: process.env.EMAIL_PASSWORD || ''
   }
 });
 
