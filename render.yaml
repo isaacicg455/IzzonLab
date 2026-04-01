@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: izzon-newsletter
+    runtime: node
+    rootDir: backend
+    buildCommand: npm install && npm run build
+    startCommand: node index.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true
+      - key: EMAIL
+        value: isaacicg455@gmail.com
+      - key: EMAIL_PASSWORD
+        sync: false
+    disk:
+      name: datos
+      mountPath: /opt/render/project/src/backend
+      sizeGB: 1

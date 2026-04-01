@@ -1,0 +1,79 @@
+[
+  {
+    "id": "7526871a-73db-4d7b-8ce7-d69f3e3e0e75",
+    "tipo": "noticia",
+    "categoria": "Contexto",
+    "titular": "Prueba",
+    "medio": "El pais",
+    "fecha": "2026-04-01",
+    "url": null,
+    "pdf": "/uploads/e2ec2c42-21d4-4675-b3f4-365e73259c55.pdf",
+    "creadoEn": "2026-04-01T11:56:11.780Z"
+  },
+  {
+    "id": "4186bd74-09db-4b79-8d0d-f94481fd7338",
+    "tipo": "noticia",
+    "categoria": "Proveedores",
+    "titular": "Prueba",
+    "medio": "El mundo",
+    "fecha": "2026-04-01",
+    "url": "https://www.idealista.com/alquiler-viviendas/soria-soria/",
+    "pdf": null,
+    "creadoEn": "2026-04-01T12:01:18.265Z"
+  },
+  {
+    "id": "e42e4ecd-877c-490d-8eeb-6a2a7d380b45",
+    "tipo": "noticia",
+    "categoria": "Competencia",
+    "titular": "Prueba2",
+    "medio": "El pais",
+    "fecha": "2026-03-01",
+    "url": null,
+    "pdf": "/uploads/208915ea-f640-4faa-8a69-8e6262b04829.pdf",
+    "creadoEn": "2026-04-01T12:02:14.223Z"
+  },
+  {
+    "id": "07e9cc66-deac-4315-a480-2ad9cd827074",
+    "tipo": "noticia",
+    "categoria": "Clientes",
+    "titular": "hdfghd",
+    "medio": "ghdf",
+    "fecha": "2026-02-11",
+    "url": "dgfhd",
+    "pdf": null,
+    "creadoEn": "2026-04-01T12:02:30.339Z"
+  },
+  {
+    "id": "5dad8f0f-3f79-495c-b16d-41dc3de7be32",
+    "tipo": "informe",
+    "categoria": null,
+    "titular": "adfsf",
+    "medio": "",
+    "fecha": "2026-04-11",
+    "url": null,
+    "pdf": "/uploads/c11cf94c-2bb0-4183-a621-126c5cf69bc7.pdf",
+    "creadoEn": "2026-04-01T12:04:22.939Z"
+  },
+  {
+    "id": "9e21a340-95bb-47c0-ab0d-80509a2d9165",
+    "tipo": "noticia",
+    "categoria": "Industria",
+    "titular": "ada",
+    "medio": "dads",
+    "fecha": "2026-04-01",
+    "url": "asdad",
+    "pdf": null,
+    "creadoEn": "2026-04-01T12:26:03.272Z"
+  },
+  {
+    "id": "37f94ef6-8e5a-4285-b076-9100e050bb6b",
+    "tipo": "informe",
+    "categoria": null,
+    "titular": "asda",
+    "medio": "",
+    "fecha": "2026-04-01",
+    "url": null,
+    "pdf": "/uploads/790fd2eb-dcd5-493c-9ebe-bf18244ef321.pdf",
+    "creadoEn": "2026-04-01T12:26:13.715Z"
+  }
+]
