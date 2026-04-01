@@ -168,7 +168,7 @@ app.delete('/api/noticias/:id', authMiddleware, (req, res) => {
 if (process.env.NODE_ENV === 'production') {
   const frontendBuild = path.join(__dirname, '..', 'frontend', 'build');
   app.use(express.static(frontendBuild));
-  app.get('*', (req, res) => {
+  app.get('/{*path}', (req, res) => {
     res.sendFile(path.join(frontendBuild, 'index.html'));
   });
 }
