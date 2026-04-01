@@ -28,7 +28,7 @@ function agruparPorMes(items) {
     .map(([,g]) => g);
 }
 
-function Tarjeta({ n, onEliminar, autenticado }) {
+function Tarjeta({ n, onEliminar, onEditar, autenticado }) {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
 
@@ -61,7 +61,7 @@ function Tarjeta({ n, onEliminar, autenticado }) {
         </a>
         {autenticado && (
           <div className="tarjeta-acciones">
-            <button className="tarjeta-accion editar" title="Editar">
+            <button className="tarjeta-accion editar" title="Editar" onClick={() => onEditar(n)}>
               <FontAwesomeIcon icon={faPen} />
             </button>
             <button
@@ -82,7 +82,7 @@ function Tarjeta({ n, onEliminar, autenticado }) {
   );
 }
 
-export default function GridNoticias({ noticias, onEliminar, autenticado }) {
+export default function GridNoticias({ noticias, onEliminar, onEditar, autenticado }) {
   const [tipoPrincipal, setTipoPrincipal] = useState('noticia');
   const [categoria, setCategoria] = useState('');
   const [mes, setMes] = useState('');
@@ -161,7 +161,7 @@ export default function GridNoticias({ noticias, onEliminar, autenticado }) {
             </div>
             <div className="grid-noticias">
               {grupo.items.map(n => (
-                <Tarjeta key={n.id} n={n} onEliminar={onEliminar} autenticado={autenticado} />
+                <Tarjeta key={n.id} n={n} onEliminar={onEliminar} onEditar={onEditar} autenticado={autenticado} />
               ))}
             </div>
           </div>

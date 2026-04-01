@@ -18,6 +18,7 @@ export default function App() {
   const [noticias, setNoticias] = useState([]);
   const [vista, setVista] = useState('noticias');
   const [modal, setModal] = useState(null);
+  const [editando, setEditando] = useState(null);
   const [mensaje, setMensaje] = useState(null);
 
   useEffect(() => {
@@ -39,6 +40,23 @@ export default function App() {
       await cargarNoticias();
       setModal(null);
       mostrarMensaje('Añadido correctamente', 'exito');
+    } else {
+      const err = await res.json();
+      mostrarMensaje(err.error, 'error');
+    }
+  }
+
+  async function editarItem(formData) {
+    const res = await fetch(`${API}/noticias/${editando.id}`, {
+      method: 'PUT',
+      headers: authHeader(),
+      body: formData
+    });
+    if (res.ok) {
+      await cargarNoticias();
+      setModal(null);
+      setEditando(null);
+      mostrarMensaje('Guardado correctamente', 'exito');
     } else {
       const err = await res.json();
       mostrarMensaje(err.error, 'error');
@@ -109,7 +127,12 @@ export default function App() {
 
       <main className="main" id="contenido">
         {vista === 'noticias'
-          ? <GridNoticias noticias={noticias} onEliminar={eliminarNoticia} autenticado={autenticado} />
+          ? <GridNoticias
+              noticias={noticias}
+              onEliminar={eliminarNoticia}
+              onEditar={(item) => { setEditando(item); setModal('editar'); }}
+              autenticado={autenticado}
+            />
           : <GeneradorHTML noticias={noticias} />
         }
       </main>
@@ -130,6 +153,15 @@ export default function App() {
         <Modal onClose={() => setModal(null)}>
           <h2 className="modal-title">Nuevo informe</h2>
           <FormInforme onSubmit={agregarItem} />
+        </Modal>
+      )}
+      {modal === 'editar' && editando && (
+        <Modal onClose={() => { setModal(null); setEditando(null); }}>
+          <h2 className="modal-title">Editar {editando.tipo === 'informe' ? 'informe' : 'noticia'}</h2>
+          {editando.tipo === 'informe'
+            ? <FormInforme onSubmit={editarItem} inicial={editando} />
+            : <FormNoticia onSubmit={editarItem} inicial={editando} />
+          }
         </Modal>
       )}
     </div>

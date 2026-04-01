@@ -103,7 +103,7 @@ app.post('/api/newsletter/enviar', authMiddleware, async (req, res) => {
 
   try {
     await transporter.sendMail({
-      from: `"Izzon Lab" <${config.email}>`,
+      from: `"Izzon Lab" <${process.env.EMAIL || 'isaacicg455@gmail.com'}>`,
       to: destinatarios.join(', '),
       subject: asunto,
       html: cuerpo
@@ -146,6 +146,36 @@ app.post('/api/noticias', authMiddleware, upload.single('pdf'), (req, res) => {
   data.push(noticia);
   writeData(data);
   res.status(201).json(noticia);
+});
+
+// PUT editar noticia (protegido)
+app.put('/api/noticias/:id', authMiddleware, upload.single('pdf'), (req, res) => {
+  const data = readData();
+  const idx = data.findIndex(n => n.id === req.params.id);
+  if (idx === -1) return res.status(404).json({ error: 'No encontrada' });
+
+  const { titular, medio, fecha, url, categoria } = req.body;
+  const noticia = data[idx];
+
+  if (req.file) {
+    if (noticia.pdf) {
+      const old = path.join(__dirname, noticia.pdf);
+      if (fs.existsSync(old)) fs.unlinkSync(old);
+    }
+    noticia.pdf = `/uploads/${req.file.filename}`;
+    noticia.url = null;
+  } else if (url !== undefined) {
+    noticia.url = url || null;
+    noticia.pdf = noticia.pdf; // keep existing pdf if url not changed
+  }
+
+  noticia.titular = titular || noticia.titular;
+  noticia.medio = medio !== undefined ? medio : noticia.medio;
+  noticia.fecha = fecha || noticia.fecha;
+  noticia.categoria = categoria !== undefined ? categoria : noticia.categoria;
+
+  writeData(data);
+  res.json(noticia);
 });
 
 // DELETE noticia (protegido)

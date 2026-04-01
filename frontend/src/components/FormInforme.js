@@ -1,11 +1,15 @@
 import { useState } from 'react';
 import './Form.css';
 
-const ESTADO_INICIAL = { titulo: '', fecha: '', pdf: null };
+function estadoDesde(inicial) {
+  if (!inicial) return { titulo: '', fecha: '', pdf: null };
+  return { titulo: inicial.titular || '', fecha: inicial.fecha || '', pdf: null };
+}
 
-export default function FormInforme({ onSubmit }) {
-  const [form, setForm] = useState(ESTADO_INICIAL);
+export default function FormInforme({ onSubmit, inicial }) {
+  const [form, setForm] = useState(() => estadoDesde(inicial));
   const [cargando, setCargando] = useState(false);
+  const esEdicion = !!inicial;
 
   function handleChange(e) {
     const { name, value, files } = e.target;
@@ -21,13 +25,13 @@ export default function FormInforme({ onSubmit }) {
     data.append('titular', form.titulo);
     data.append('fecha', form.fecha);
     data.append('medio', '');
-    data.append('pdf', form.pdf);
+    if (form.pdf) data.append('pdf', form.pdf);
     await onSubmit(data);
-    setForm(ESTADO_INICIAL);
+    if (!esEdicion) setForm(estadoDesde(null));
     setCargando(false);
   }
 
-  const valido = form.titulo && form.fecha && form.pdf;
+  const valido = form.titulo && form.fecha && (esEdicion || form.pdf);
 
   return (
     <form className="form" onSubmit={handleSubmit}>
@@ -40,12 +44,15 @@ export default function FormInforme({ onSubmit }) {
         <input type="date" name="fecha" value={form.fecha} onChange={handleChange} required />
       </div>
       <div className="field">
-        <label>PDF *</label>
-        <input type="file" name="pdf" accept=".pdf" onChange={handleChange} required />
+        <label>PDF {!esEdicion && '*'}</label>
+        <input type="file" name="pdf" accept=".pdf" onChange={handleChange} />
         {form.pdf && <span className="pdf-nombre">{form.pdf.name}</span>}
+        {esEdicion && inicial.pdf && !form.pdf && (
+          <span className="pdf-nombre">PDF actual: {inicial.pdf.split('/').pop()}</span>
+        )}
       </div>
       <button type="submit" className="btn-submit" disabled={!valido || cargando}>
-        {cargando ? 'Guardando...' : 'Añadir informe'}
+        {cargando ? 'Guardando...' : esEdicion ? 'Guardar cambios' : 'Añadir informe'}
       </button>
     </form>
   );

@@ -2,11 +2,24 @@ import { useState } from 'react';
 import './Form.css';
 
 const CATEGORIAS = ['Izzon Lab','Industria','Contexto','Clientes','Proveedores','Competencia','Asociaciones'];
-const ESTADO_INICIAL = { titular: '', fecha: '', medio: '', categoria: '', tipo_enlace: 'url', url: '', pdf: null };
 
-export default function FormNoticia({ onSubmit }) {
-  const [form, setForm] = useState(ESTADO_INICIAL);
+function estadoDesde(inicial) {
+  if (!inicial) return { titular: '', fecha: '', medio: '', categoria: '', tipo_enlace: 'url', url: '', pdf: null };
+  return {
+    titular: inicial.titular || '',
+    fecha: inicial.fecha || '',
+    medio: inicial.medio || '',
+    categoria: inicial.categoria || '',
+    tipo_enlace: inicial.pdf ? 'pdf' : 'url',
+    url: inicial.url || '',
+    pdf: null
+  };
+}
+
+export default function FormNoticia({ onSubmit, inicial }) {
+  const [form, setForm] = useState(() => estadoDesde(inicial));
   const [cargando, setCargando] = useState(false);
+  const esEdicion = !!inicial;
 
   function handleChange(e) {
     const { name, value, files } = e.target;
@@ -23,14 +36,19 @@ export default function FormNoticia({ onSubmit }) {
     data.append('fecha', form.fecha);
     data.append('medio', form.medio);
     data.append('categoria', form.categoria);
-    if (form.tipo_enlace === 'url') data.append('url', form.url);
-    else data.append('pdf', form.pdf);
+    if (form.tipo_enlace === 'url') {
+      data.append('url', form.url);
+    } else if (form.pdf) {
+      data.append('pdf', form.pdf);
+    }
     await onSubmit(data);
-    setForm(ESTADO_INICIAL);
+    if (!esEdicion) setForm(estadoDesde(null));
     setCargando(false);
   }
 
-  const enlaceValido = form.tipo_enlace === 'url' ? !!form.url : !!form.pdf;
+  const enlaceValido = esEdicion
+    ? true
+    : form.tipo_enlace === 'url' ? !!form.url : !!form.pdf;
   const valido = form.titular && form.fecha && form.medio && form.categoria && enlaceValido;
 
   return (
@@ -55,7 +73,7 @@ export default function FormNoticia({ onSubmit }) {
         </select>
       </div>
       <div className="field">
-        <label>Enlace *</label>
+        <label>Enlace {!esEdicion && '*'}</label>
         <div className="tipo-toggle">
           <button type="button" className={form.tipo_enlace === 'url' ? 'tipo-btn active' : 'tipo-btn'}
             onClick={() => setForm(f => ({ ...f, tipo_enlace: 'url', pdf: null }))}>
@@ -69,16 +87,19 @@ export default function FormNoticia({ onSubmit }) {
       </div>
       {form.tipo_enlace === 'url' ? (
         <div className="field">
-          <input name="url" value={form.url} onChange={handleChange} placeholder="https://..." required />
+          <input name="url" value={form.url} onChange={handleChange} placeholder="https://..." />
         </div>
       ) : (
         <div className="field">
-          <input type="file" name="pdf" accept=".pdf" onChange={handleChange} required />
+          <input type="file" name="pdf" accept=".pdf" onChange={handleChange} />
           {form.pdf && <span className="pdf-nombre">{form.pdf.name}</span>}
+          {esEdicion && inicial.pdf && !form.pdf && (
+            <span className="pdf-nombre">PDF actual: {inicial.pdf.split('/').pop()}</span>
+          )}
         </div>
       )}
       <button type="submit" className="btn-submit" disabled={!valido || cargando}>
-        {cargando ? 'Guardando...' : 'Añadir noticia'}
+        {cargando ? 'Guardando...' : esEdicion ? 'Guardar cambios' : 'Añadir noticia'}
       </button>
     </form>
   );
