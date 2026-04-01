@@ -12,9 +12,10 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 const JWT_SECRET = process.env.JWT_SECRET || 'izzon_lab_secret_2024_x9kp2m';
 
-const DATA_FILE   = path.join(__dirname, 'data', 'noticias.json');
-const USER_FILE   = path.join(__dirname, 'data', 'usuario.json');
-const UPLOADS_DIR = path.join(__dirname, 'uploads');
+const BASE_DIR    = process.env.RENDER_DISK_PATH || __dirname;
+const DATA_FILE   = path.join(BASE_DIR, 'data', 'noticias.json');
+const USER_FILE   = path.join(BASE_DIR, 'data', 'usuario.json');
+const UPLOADS_DIR = path.join(BASE_DIR, 'uploads');
 
 // Crear carpetas y ficheros si no existen
 if (!fs.existsSync(path.join(__dirname, 'data'))) fs.mkdirSync(path.join(__dirname, 'data'), { recursive: true });
