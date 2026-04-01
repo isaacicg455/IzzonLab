@@ -1,0 +1,111 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #666;
+  font-weight: 600;
+}
+
+.field input:not([type="file"]) {
+  border: 1px solid var(--borde);
+  background: var(--blanco);
+  padding: 10px 12px;
+  font-size: 14px;
+  color: var(--negro);
+  outline: none;
+  width: 100%;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+
+.field input:not([type="file"]):focus {
+  border-color: var(--negro);
+}
+
+.field select {
+  border: 1px solid var(--borde);
+  background: var(--blanco);
+  padding: 10px 12px;
+  font-size: 14px;
+  color: var(--negro);
+  outline: none;
+  width: 100%;
+  font-family: inherit;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%231a1a1a' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.field select:focus {
+  border-color: var(--negro);
+}
+
+.tipo-toggle {
+  display: flex;
+  border: 1px solid var(--borde);
+  overflow: hidden;
+}
+
+.tipo-btn {
+  flex: 1;
+  padding: 9px;
+  background: var(--blanco);
+  border: none;
+  font-size: 13px;
+  color: #888;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.tipo-btn:first-child {
+  border-right: 1px solid var(--borde);
+}
+
+.tipo-btn.active {
+  background: var(--negro);
+  color: var(--arena);
+}
+
+.pdf-nombre {
+  font-size: 12px;
+  color: #888;
+}
+
+.btn-submit {
+  margin-top: 8px;
+  background: var(--negro);
+  color: var(--arena);
+  border: none;
+  padding: 13px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-family: inherit;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-submit:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.btn-submit:not(:disabled):hover {
+  opacity: 0.82;
+}

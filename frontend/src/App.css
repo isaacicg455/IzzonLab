@@ -1,0 +1,127 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* NAVBAR */
+.navbar {
+  background: var(--negro);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid #2a2a2a;
+}
+
+.navbar-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 40px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar-tabs {
+  display: flex;
+  gap: 0;
+  height: 100%;
+}
+
+.nav-btn {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: #666;
+  padding: 0 20px;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  height: 100%;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.nav-btn:hover { color: var(--arena); }
+
+.nav-btn.active {
+  color: var(--arena);
+  border-bottom-color: var(--arena);
+}
+
+.navbar-acciones {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-anadir {
+  background: var(--arena);
+  color: var(--negro);
+  border: none;
+  padding: 9px 22px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-anadir:hover { opacity: 0.85; }
+
+.btn-user {
+  background: transparent;
+  border: 1px solid #444;
+  color: #666;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 13px;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.btn-user:hover {
+  color: var(--arena);
+  border-color: var(--arena);
+}
+
+.btn-user.activo {
+  color: var(--arena);
+  border-color: var(--arena);
+}
+
+/* MAIN */
+.main {
+  flex: 1;
+  padding: 56px 40px;
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* MODAL */
+.modal-title {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--borde);
+}
+
+/* TOAST */
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 12px 20px;
+  font-size: 13px;
+  font-weight: 500;
+  z-index: 1000;
+  border-radius: 2px;
+}
+
+.toast-exito { background: var(--exito); color: white; }
+.toast-error  { background: var(--error);  color: white; }

@@ -1,0 +1,29 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --arena: #cac4b8;
+  --arena-dark: #b5ae9f;
+  --negro: #1a1a1a;
+  --blanco: #ffffff;
+  --fondo: #f5f3f0;
+  --borde: #ddd8d0;
+  --error: #c0392b;
+  --exito: #27ae60;
+}
+
+body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background: var(--fondo);
+  color: var(--negro);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
